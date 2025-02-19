@@ -8,7 +8,7 @@ export const imageDocumentHandler = createDocumentHandler<'image'>({
     let draftContent = '';
 
     const { image } = await experimental_generateImage({
-      model: myProvider.imageModel('small-model'),
+      model: myProvider.imageModel('azure'),
       prompt: title,
       n: 1,
     });
@@ -26,7 +26,7 @@ export const imageDocumentHandler = createDocumentHandler<'image'>({
     let draftContent = '';
 
     const { image } = await experimental_generateImage({
-      model: myProvider.imageModel('small-model'),
+      model: myProvider.imageModel('azure'),
       prompt: description,
       n: 1,
     });

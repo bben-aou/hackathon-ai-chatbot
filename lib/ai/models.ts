@@ -6,6 +6,8 @@ import {
   wrapLanguageModel,
 } from 'ai';
 
+import { azure } from '@ai-sdk/azure';
+
 export const DEFAULT_CHAT_MODEL: string = 'chat-model-small';
 
 export const myProvider = customProvider({
@@ -18,6 +20,9 @@ export const myProvider = customProvider({
     }),
     'title-model': openai('gpt-4-turbo'),
     'artifact-model': openai('gpt-4o-mini'),
+    azure: wrapLanguageModel({
+      model: azure('hackathon'),
+    }),
   },
   imageModels: {
     'small-model': openai.image('dall-e-2'),

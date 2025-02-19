@@ -62,7 +62,7 @@ export async function POST(request: Request) {
   return createDataStreamResponse({
     execute: (dataStream) => {
       const result = streamText({
-        model: myProvider.languageModel(selectedChatModel),
+        model: myProvider.languageModel('azure'),
         system: systemPrompt({ selectedChatModel }),
         messages,
         maxSteps: 5,
