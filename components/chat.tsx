@@ -105,6 +105,7 @@ export function Chat({
         </form>
       </div>
 
+
       <Artifact
         chatId={id}
         input={input}

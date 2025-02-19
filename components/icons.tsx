@@ -572,7 +572,7 @@ export const PaperclipIcon = ({ size = 16 }: { size?: number }) => {
   );
 };
 
-export const MoreHorizontalIcon = ({ size = 16 }: { size?: number }) => {
+export const MoreHorizontalIcon = ({ size = 16}: { size?: number }) => {
   return (
     <svg
       height={size}
