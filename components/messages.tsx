@@ -1,10 +1,27 @@
-import { ChatRequestOptions, Message } from 'ai';
-import { PreviewMessage, ThinkingMessage } from './message';
-import { useScrollToBottom } from './use-scroll-to-bottom';
-import { Overview } from './overview';
-import { memo } from 'react';
-import { Vote } from '@/lib/db/schema';
-import equal from 'fast-deep-equal';
+import { ChatRequestOptions, Message } from "ai";
+import { PreviewMessage, ThinkingMessage } from "./message";
+import { useScrollToBottom } from "./use-scroll-to-bottom";
+import { Overview } from "./overview";
+import { memo } from "react";
+import { Vote } from "@/lib/db/schema";
+import equal from "fast-deep-equal";
+import ListingCard from "./properties-preview";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "./ui/carousel";
+
+export const listing = {
+  image: "https://placehold.co/600x400",
+  title: "Appartement 4 500 000 DH",
+  price: "Soin 4 300 DH/Mois",
+  rentalPrice: "Contacter un expert crédit",
+  location: "Beverly Hills, CA",
+  details: "3 beds · 3 baths · 2,100 sqft",
+};
 
 interface MessagesProps {
   chatId: string;
@@ -12,10 +29,10 @@ interface MessagesProps {
   votes: Array<Vote> | undefined;
   messages: Array<Message>;
   setMessages: (
-    messages: Message[] | ((messages: Message[]) => Message[]),
+    messages: Message[] | ((messages: Message[]) => Message[])
   ) => void;
   reload: (
-    chatRequestOptions?: ChatRequestOptions,
+    chatRequestOptions?: ChatRequestOptions
   ) => Promise<string | null | undefined>;
   isReadonly: boolean;
   isArtifactVisible: boolean;
@@ -36,10 +53,9 @@ function PureMessages({
   return (
     <div
       ref={messagesContainerRef}
-      className="flex flex-col min-w-0 gap-6 flex-1 overflow-y-scroll pt-4"
+      className="flex flex-col min-w-0 gap-6 flex-1 overflow-y-scroll pt-4 "
     >
       {messages.length === 0 && <Overview />}
-
       {messages.map((message, index) => (
         <PreviewMessage
           key={message.id}
@@ -59,7 +75,7 @@ function PureMessages({
 
       {isLoading &&
         messages.length > 0 &&
-        messages[messages.length - 1].role === 'user' && <ThinkingMessage />}
+        messages[messages.length - 1].role === "user" && <ThinkingMessage />}
 
       <div
         ref={messagesEndRef}

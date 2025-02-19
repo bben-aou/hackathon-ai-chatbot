@@ -49,6 +49,7 @@ import {
 import type { Chat } from '@/lib/db/schema';
 import { fetcher } from '@/lib/utils';
 import { useChatVisibility } from '@/hooks/use-chat-visibility';
+import { Ellipsis } from 'lucide-react';
 
 type GroupedChats = {
   today: Chat[];
@@ -75,20 +76,20 @@ const PureChatItem = ({
   });
 
   return (
-    <SidebarMenuItem>
-      <SidebarMenuButton asChild isActive={isActive}>
+    <SidebarMenuItem  className="group">
+      <SidebarMenuButton asChild isActive={isActive}  className="hover:bg-sidebar-hover hover:text-white  rounded-[6px]  ">
         <Link href={`/chat/${chat.id}`} onClick={() => setOpenMobile(false)}>
           <span>{chat.title}</span>
         </Link>
       </SidebarMenuButton>
 
       <DropdownMenu modal={true}>
-        <DropdownMenuTrigger asChild>
+        <DropdownMenuTrigger  asChild >
           <SidebarMenuAction
-            className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground mr-0.5"
+            className="data-[state=open]:bg-sidebar-accent   data-[state=open]:text-sidebar-accent-foreground mr-0.5"
             showOnHover={!isActive}
           >
-            <MoreHorizontalIcon />
+            <Ellipsis className='group-hover:text-white'/>
             <span className="sr-only">More</span>
           </SidebarMenuAction>
         </DropdownMenuTrigger>
@@ -208,11 +209,11 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
   if (isLoading) {
     return (
       <SidebarGroup>
-        <div className="px-2 py-1 text-xs text-sidebar-foreground/50">
-          Today
+        <div className="px-2 py-1 text-xs text-sidebar-foreground/50 ">
+          Aujourd&apos;hui
         </div>
         <SidebarGroupContent>
-          <div className="flex flex-col">
+          <div className="flex flex-col ">
             {[44, 32, 28, 64, 52].map((item) => (
               <div
                 key={item}
@@ -292,8 +293,8 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
                   <>
                     {groupedChats.today.length > 0 && (
                       <>
-                        <div className="px-2 py-1 text-xs text-sidebar-foreground/50">
-                          Today
+                        <div className="px-2 py-1 text-xs text-sidebar-foreground/50 ">
+                          Aujourd&apos;hui
                         </div>
                         {groupedChats.today.map((chat) => (
                           <ChatItem
@@ -312,7 +313,7 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
 
                     {groupedChats.yesterday.length > 0 && (
                       <>
-                        <div className="px-2 py-1 text-xs text-sidebar-foreground/50 mt-6">
+                        <div className="px-2 py-1 text-xs text-sidebar-foreground/50 mt-6 ">
                           Yesterday
                         </div>
                         {groupedChats.yesterday.map((chat) => (
