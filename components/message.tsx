@@ -7,22 +7,26 @@ import { memo, useState } from "react";
 
 import type { Vote } from "@/lib/db/schema";
 
-import { cn } from "@/lib/utils";
-import equal from "fast-deep-equal";
-import { DocumentToolCall, DocumentToolResult } from "./document";
-import { DocumentPreview } from "./document-preview";
-import { PencilEditIcon, SparklesIcon } from "./icons";
-import LoansSuggestion from "./loansSuggestion";
-import { Markdown } from "./markdown";
-import { MessageActions } from "./message-actions";
-import { MessageEditor } from "./message-editor";
-import { MessageReasoning } from "./message-reasoning";
-import { PreviewAttachment } from "./preview-attachment";
-import PropertiesSwiper from "./propertiesSwiper";
-import { Button } from "./ui/button";
-import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
-import { Weather } from "./weather";
+import { cn } from '@/lib/utils';
+import equal from 'fast-deep-equal';
+import { DocumentToolCall, DocumentToolResult } from './document';
+import { DocumentPreview } from './document-preview';
+import {
+  PencilEditIcon,
+  SparklesIcon
+} from './icons';
+import LoansSuggestion from './loansSuggestion';
+import { Markdown } from './markdown';
+import { MessageActions } from './message-actions';
+import { MessageEditor } from './message-editor';
+import { MessageReasoning } from './message-reasoning';
+import MonthlyPaymentSuggestion from './monthlyPaymentSuggestion';
+import { PreviewAttachment } from './preview-attachment';
+import PropertiesSwiper from './propertiesSwiper';
 import SpinningGradientCircle from "./SpinningGradientCircle";
+import { Button } from './ui/button';
+import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip';
+import { Weather } from './weather';
 
 const PurePreviewMessage = ({
   chatId,
@@ -167,14 +171,14 @@ const PurePreviewMessage = ({
                         ) : toolName === "getProperties" ? (
                           result.properties && result.properties.length > 0 ? (
                             <PropertiesSwiper properties={result.properties} />
-                          ) : (
-                            <pre></pre>
-                          )
-                        ) : toolName === "getLoanSuggestions" ? (
-                          <LoansSuggestion
-                            loanSuggestions={result.loanSuggestions}
-                          />
-                        ) : (
+                          ) : <pre></pre>
+                        ) : toolName === 'getLoanSuggestions' ? ((
+                            <LoansSuggestion loanSuggestions={result.loanSuggestions} />
+                          ) 
+                        ): toolName === 'getMonthlyPaymentSuggestions' ? ((
+                          <MonthlyPaymentSuggestion monthlyPaymentSuggestions={result.monthlyPaymentSuggestions} />
+                        ) 
+                      ) :  (
                           <pre>{JSON.stringify(result, null, 2)}</pre>
                         )}
                       </div>

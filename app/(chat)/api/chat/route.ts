@@ -20,7 +20,7 @@ import {
 } from '@/lib/utils';
 
 import { createDocument } from '@/lib/ai/tools/create-document';
-import { getLoanSuggestions } from '@/lib/ai/tools/get-loan-suggestions';
+import { getMonthlyPaymentSuggestions } from '@/lib/ai/tools/get-monthly-payment-suggestions';
 import { getProperties } from '@/lib/ai/tools/get-properties';
 import { getWeather } from '@/lib/ai/tools/get-weather';
 import { getContactInfos } from '@/lib/ai/tools/getContactInfos';
@@ -76,7 +76,8 @@ export async function POST(request: Request) {
           'requestSuggestions',
           'getProperties',
           'getContactInfos',
-          'getLoanSuggestions'
+          //'getLoanSuggestions',
+          'getMonthlyPaymentSuggestions'
         ],
         experimental_transform: smoothStream({ chunking: 'word' }),
         experimental_generateMessageId: generateUUID,
@@ -86,7 +87,8 @@ export async function POST(request: Request) {
             message: userMessage.content,
             dataStream,
           }),
-          getLoanSuggestions: getLoanSuggestions(),
+          //getLoanSuggestions: getLoanSuggestions(),
+          getMonthlyPaymentSuggestions: getMonthlyPaymentSuggestions(),
           createDocument: createDocument({ session, dataStream }),
           updateDocument: updateDocument({ session, dataStream }),
           requestSuggestions: requestSuggestions({

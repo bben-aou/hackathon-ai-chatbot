@@ -34,7 +34,7 @@ const LoansSuggestion = (props: TLoansSuggestionProps) => {
         key={index}
         className="bg-white p-4 rounded-lg shadow-md flex flex-col space-y-2"
       >
-        <span className="bg-[#83c9bd] text-white px-3 py-1 rounded-full text-sm font-medium inline-flex items-center">
+        <span className="bg-[#22826e] text-white px-3 py-1 rounded-full text-sm font-medium inline-flex items-center">
           📅 {formatDuration(item.eligibilityDurationInMonths)}
         </span>
         <p className="text-2xl font-semibold text-gray-900">
