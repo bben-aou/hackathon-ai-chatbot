@@ -9,7 +9,6 @@ import {
   CarouselPrevious,
 } from "./ui/carousel";
 import { useState } from "react";
-import { useChat } from 'ai/react'; // Import useChat
 import { useParams } from "next/navigation";
 
 
@@ -46,7 +45,6 @@ const PropertiesSwiper = (props: TPropertiesSwiperProps) => {
                       <ListingCard
                         property={formattedProperty}
                         onRemove={() => removeProperty(index)}
-                        onClick={()=>{}}
                       />
                     </div>
                   </CarouselItem>

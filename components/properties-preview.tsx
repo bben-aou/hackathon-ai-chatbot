@@ -2,6 +2,7 @@ import { calculateMonthlyPayment, formatAmount } from "@/utils/utils";
 import { Button } from "./ui/button";
 import { Card, CardContent, CardFooter, CardHeader } from "./ui/card";
 import { Check, MapPin } from "lucide-react";
+import Link from 'next/link';
 
 type TAddress = {
   main: string;
@@ -41,6 +42,7 @@ export type TListingCard = {
   transactionType: string;
   image: string;
   rooms: number;
+  url : string;
 };
 export type TListingCardProps = {
   property: TListingCard;
@@ -49,7 +51,7 @@ export type TListingCardProps = {
 };
 
 const ListingCard = (props: TListingCardProps) => {
-  const { property, onRemove, onClick } = props;
+  const { property, onRemove } = props;
 
   const handleSelectProperty = () => {
     const inputElement = document.getElementById(
@@ -134,12 +136,14 @@ const ListingCard = (props: TListingCardProps) => {
         </div>
       </CardContent>
       <CardFooter className="px-4 flex justify-between">
-        <Button
-          variant="outline"
-          className="w-[160px] rounded-[8px] bg-[#218075] text-white hover:bg-[#64a69f] hover:text-text"
-        >
-          Voir plus
-        </Button>
+        <Link href={property.url} target="_blank" rel="noopener noreferrer">
+          <Button
+            variant="outline"
+            className="w-[160px] rounded-[8px] bg-[#218075] text-white hover:bg-[#64a69f] hover:text-text"
+          >
+            Voir plus
+          </Button>
+        </Link>
         <div className="flex space-x-2">
           <Button
             variant="ghost"

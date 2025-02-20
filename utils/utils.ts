@@ -36,7 +36,8 @@ export function formatPropertyToListingCard(property: any) {
       global: property.price.global,
     },
     transactionType: property.transactionType,
-    image: mainImageUrl
+    image: mainImageUrl,
+    url : `https://stage.yakeey.com/fr-ma/-${getUserRef(property)}`,
   };
 }
 
@@ -69,3 +70,41 @@ export function formatAmount(amount) {
     const monthlyPayement = price / (years * 12);
      return monthlyPayement.toFixed(2);
      }
+
+
+     /**
+ * Generates a user reference code based on city, property type, and user reference number
+ * @param {Object} userObject - The user object containing address, category, and userReference
+ * @returns {String} Formatted user reference code
+ */
+export function getUserRef(userObject) {
+  // Helper function to capitalize first letter
+  const firstLetterToUpperCase = (str) => {
+      if (!str) return '';
+      return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+  };
+
+  // Get city key (first letter uppercase)
+  const cityKey = userObject.address && userObject.address.city 
+      ? firstLetterToUpperCase(userObject.address.city)[0]
+      : "I";
+  
+  // Get type key with FLAT transformation
+  let typeKey = "I";
+  if (userObject.category) {
+      // Transform FLAT to APPARTMENT, keep VILLA as is
+      if (userObject.category === "FLAT") {
+          typeKey = "A"; // First letter of APPARTMENT
+      } else {
+          typeKey = firstLetterToUpperCase(userObject.category)[0];
+      }
+  }
+  
+  // Format user reference with leading zeros
+  const userReference = userObject.userReference;
+  if (userReference != null) {
+      return cityKey + typeKey + String(userReference).padStart(6, '0');
+  } else {
+      return cityKey + typeKey + "000000";
+  }
+}
