@@ -7,7 +7,6 @@ import {
 
 import { auth } from '@/app/(auth)/auth';
 import { myProvider } from '@/lib/ai/models';
-import { systemPrompt } from '@/lib/ai/prompts';
 import {
   deleteChatById,
   getChatById,
@@ -21,12 +20,13 @@ import {
 } from '@/lib/utils';
 
 import { createDocument } from '@/lib/ai/tools/create-document';
+import { getLoanSuggestions } from '@/lib/ai/tools/get-loan-suggestions';
+import { getProperties } from '@/lib/ai/tools/get-properties';
 import { getWeather } from '@/lib/ai/tools/get-weather';
+import { getContactInfos } from '@/lib/ai/tools/getContactInfos';
 import { requestSuggestions } from '@/lib/ai/tools/request-suggestions';
 import { updateDocument } from '@/lib/ai/tools/update-document';
 import { generateTitleFromUserMessage } from '../../actions';
-import { getProperties } from '@/lib/ai/tools/get-properties';
-import { getContactInfos } from '@/lib/ai/tools/getContactInfos';
 
 export const maxDuration = 60;
 
@@ -76,6 +76,7 @@ export async function POST(request: Request) {
           'requestSuggestions',
           'getProperties',
           'getContactInfos',
+          'getLoanSuggestions'
         ],
         experimental_transform: smoothStream({ chunking: 'word' }),
         experimental_generateMessageId: generateUUID,
@@ -85,6 +86,7 @@ export async function POST(request: Request) {
             message: userMessage.content,
             dataStream,
           }),
+          getLoanSuggestions: getLoanSuggestions(),
           createDocument: createDocument({ session, dataStream }),
           updateDocument: updateDocument({ session, dataStream }),
           requestSuggestions: requestSuggestions({

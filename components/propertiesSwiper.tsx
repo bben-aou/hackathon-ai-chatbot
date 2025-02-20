@@ -1,5 +1,4 @@
 import { formatPropertyToListingCard } from "@/utils/utils";
-import { listing } from "./messages";
 import ListingCard, { TListingCard } from "./properties-preview";
 import {
   Carousel,

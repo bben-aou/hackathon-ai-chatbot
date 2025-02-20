@@ -3,38 +3,28 @@
 import type { ChatRequestOptions, Message } from 'ai';
 import cx from 'classnames';
 import { AnimatePresence, motion } from 'framer-motion';
-import { memo, useMemo, useState } from 'react';
+import { memo, useState } from 'react';
 
 import type { Vote } from '@/lib/db/schema';
 
+import { cn } from '@/lib/utils';
+import equal from 'fast-deep-equal';
 import { DocumentToolCall, DocumentToolResult } from './document';
+import { DocumentPreview } from './document-preview';
 import {
-  ChevronDownIcon,
-  LoaderIcon,
   PencilEditIcon,
-  SparklesIcon,
+  SparklesIcon
 } from './icons';
+import LoansSuggestion from './loansSuggestion';
 import { Markdown } from './markdown';
 import { MessageActions } from './message-actions';
+import { MessageEditor } from './message-editor';
+import { MessageReasoning } from './message-reasoning';
 import { PreviewAttachment } from './preview-attachment';
-import { Weather } from './weather';
-import equal from 'fast-deep-equal';
-import { cn } from '@/lib/utils';
+import PropertiesSwiper from './propertiesSwiper';
 import { Button } from './ui/button';
 import { Tooltip, TooltipContent, TooltipTrigger } from './ui/tooltip';
-import { MessageEditor } from './message-editor';
-import { DocumentPreview } from './document-preview';
-import { MessageReasoning } from './message-reasoning';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from './ui/carousel';
-import ListingCard from './properties-preview';
-import { listing } from './messages';
-import PropertiesSwiper from './propertiesSwiper';
+import { Weather } from './weather';
 
 const PurePreviewMessage = ({
   chatId,
@@ -180,7 +170,10 @@ const PurePreviewMessage = ({
                           result.properties.length > 0) ? (
                             <PropertiesSwiper properties={result.properties} />
                           ) : <pre></pre>
-                        ) : (
+                        ) : toolName === 'getLoanSuggestions' ? ((
+                            <LoansSuggestion loanSuggestions={result.loanSuggestions} />
+                          ) 
+                        ) :  (
                           <pre>{JSON.stringify(result, null, 2)}</pre>
                         )}
                       </div>

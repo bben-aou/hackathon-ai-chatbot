@@ -1,9 +1,9 @@
+import { mongoDbClient } from '@/lib/mongo/mongo';
 import { generateUUID } from '@/lib/utils';
 import { DataStreamWriter, generateObject, tool } from 'ai';
-import { z } from 'zod';
 import { Session } from 'next-auth';
+import { z } from 'zod';
 import { myProvider } from '../models';
-import { mongoDbClient } from '@/lib/mongo/mongo';
 
 interface CreateDocumentProps {
   session: Session;
@@ -14,7 +14,7 @@ const sysPrompt = `
 You are a MongoDB query and data visualization expert. Your job is to help the user write a MongoDB query to retrieve the data they need. The document schema is as follows:
 {
   status: 'LISTED', // This is the status of the properties, we only need to query properties whoses status is 'LISTED'
-  transactionType: 'RENT', // This is the type of transaction, the possible values are SALE("acheter")/RENT("louer"), we only support SALE/RENT for now.
+  transactionType: 'SALE', // This is the type of transaction, the possible values are SALE("acheter") we only support SALE for now. if user ask for rent let him know that we only support SALE for now
   isNew: false, // This is a field to determine whether the property is new or not
   photos: [
     // This photos array contains the photos of the property
@@ -1886,7 +1886,7 @@ here is a list of the possible cities that you infer from the input of the user
   "Lotissement El Menzah"
 ]
 
-  when it comes to the price of the property, a user might input a fixed number like: 10000DH, i need you to check for greater than 10% of the price and -10% of the price
+  when it comes to the price of the property, a user might input a fixed number like: 10000DH, i need you to check for greater than 10% of the price and -10% of the price.
   Your response should resprect the following format: "{"$and": [
 {// condition 1},
 {// condition 2},
@@ -1907,9 +1907,10 @@ export const getProperties = ({
     description:
       'Get Suggestions for real estate properties based on user prompt, and make sure to take into consideration the fact that the user can use multiple languages, mainly darija, french and english',
     parameters: z.object({
-      price: z.number().optional(),
+      price: z.number(),
       propertyType: z.enum(propertyTypes).optional(),
-      city: z.string().optional(),
+      transactionType: z.enum(['RENT', 'SALE']),
+      city: z.string(),
       neighborhood: z.string().optional(),
       bedrooms: z.number().optional(),
       bathrooms: z.number().optional(),
@@ -1939,51 +1940,6 @@ export const getProperties = ({
       const properties = JSON.parse(JSON.stringify(documents, null, 2));
       const id = generateUUID();
 
-      //   dataStream.writeData({
-      //     type: 'kind',
-      //     content: kind,
-      //   });
-
-      //   dataStream.writeData({
-      //     type: 'id',
-      //     content: id,
-      //   });
-
-      //   dataStream.writeData({
-      //     type: 'title',
-      //     content: title,
-      //   });
-
-      //   dataStream.writeData({
-      //     type: 'clear',
-      //     content: '',
-      //   });
-
-      //   const documentHandler = documentHandlersByArtifactKind.find(
-      //     (documentHandlerByArtifactKind) =>
-      //       documentHandlerByArtifactKind.kind === kind
-      //   );
-
-      //   if (!documentHandler) {
-      //     throw new Error(`No document handler found for kind: ${kind}`);
-      //   }
-
-      //   await documentHandler.onCreateDocument({
-      //     id,
-      //     title,
-      //     dataStream,
-      //     session,
-      //   });
-
-      //   dataStream.writeData({ type: 'finish', content: '' });
-
-      //   return {
-      //     id,
-      //     title,
-      //     kind,
-      //     content: 'A document was created and is now visible to the user.',
-      //   };
-      // },
       properties.forEach((property) => {
         property?.photos?.forEach((photo) => {
           if (photo?.url) {
@@ -1994,7 +1950,6 @@ export const getProperties = ({
           }
         });
       });
-      console.log('properties', properties);
       
       if (!properties || properties.length === 0) return {};
 
