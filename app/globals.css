@@ -37,7 +37,7 @@
             --popover-foreground: 220 10% 23%; /* Charcoal gray */
             
             /* Primary */
-            --primary: 170 39% 65%;           /* ChatGPT green (unchanged) */
+            --primary: 168 59% 32%;           /* ChatGPT green (unchanged) */
             --primary-foreground: 0 0% 100%;  /* #FFFFFF */
             
             /* Secondary */
@@ -73,11 +73,11 @@
             --sidebar-foreground: 220 10% 23%; /* Charcoal gray */
             --sidebar-primary: 173 47% 38%;    /* ChatGPT green (unchanged) */
             --sidebar-primary-foreground: 0 0% 100%; /* #FFFFFF */
-            --sidebar-accent: 240 100% 99%;    /* #f8f8ff */
+            --sidebar-accent: 0 0% 89%;    /* #f8f8ff */
             --sidebar-accent-foreground: 220 10% 23%; /* Charcoal gray */
             --sidebar-border: 240 4% 93%;      /* #EEEEEF */
             --sidebar-ring: 173 47% 38%;       /* ChatGPT green (unchanged) */
-            --sidebar-hover: 152 91% 19%;      /* #085D3A */
+            --sidebar-hover: 168 59% 32%;      /* #085D3A */
             --sidebar-hover-foreground: 0 0% 100%; /* #FFFFFF */
         }
     .dark {
