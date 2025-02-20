@@ -125,7 +125,7 @@ const ListingCard = (props: TListingCardProps) => {
             <div className="font-medium">{property.rooms}</div>
             <p>chambres</p>
           </div>
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1 whitespace-nowrap	">
             <div className="font-medium">{property.bathrooms}</div>
             <p>salles de bains</p>
           </div>

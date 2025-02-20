@@ -6,13 +6,13 @@ import { ThemeProvider } from '@/components/theme-provider';
 import './globals.css';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://chat.vercel.ai'),
-  title: 'Next.js Chatbot Template',
-  description: 'Next.js chatbot template using the AI SDK.',
-};
+  metadataBase: new URL('https://yakeey.com/fr-ma/achat/biens/maroc'),
+  title: 'KeyO | Assistant Immobilier IA',
+  description: 'KeyO est un assistant immobilier intelligent qui vous aide à trouver les meilleures propriétés au Maroc selon vos critères.',
+}
 
 export const viewport = {
-  maximumScale: 1, // Disable auto-zoom on mobile Safari
+  maximumScale: 1,
 };
 
 const LIGHT_THEME_COLOR = 'hsl(0 0% 100%)';
