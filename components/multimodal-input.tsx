@@ -232,7 +232,8 @@ function PureMultimodalInput({
 
       <Textarea
         ref={textareaRef}
-        placeholder="Send a message..."
+        id="prompt-input"
+        placeholder="Envoyer un message..."
         value={input}
         onChange={handleInput}
         className={cx(
@@ -266,6 +267,7 @@ function PureMultimodalInput({
             input={input}
             submitForm={submitForm}
             uploadQueue={uploadQueue}
+            id="send-buttom"
           />
         )}
       </div>
@@ -335,10 +337,12 @@ function PureSendButton({
   submitForm,
   input,
   uploadQueue,
+  id
 }: {
   submitForm: () => void;
   input: string;
   uploadQueue: Array<string>;
+  id: string
 }) {
   return (
     <Button
@@ -348,6 +352,7 @@ function PureSendButton({
         submitForm();
       }}
       disabled={input.length === 0 || uploadQueue.length > 0}
+      id={id}
     >
       <ArrowUpIcon size={14} />
     </Button>

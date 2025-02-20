@@ -1,5 +1,5 @@
+// eslint-disable-next-line import/no-unresolved
 import { formatPropertyToListingCard } from "@/utils/utils";
-import { listing } from "./messages";
 import ListingCard, { TListingCard } from "./properties-preview";
 import {
   Carousel,
@@ -8,36 +8,57 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "./ui/carousel";
+import { useState } from "react";
+import { useChat } from 'ai/react'; // Import useChat
+import { useParams } from "next/navigation";
+
 
 type TPropertiesSwiperProps = {
   properties: TListingCard[];
 };
+
 const PropertiesSwiper = (props: TPropertiesSwiperProps) => {
-  const { properties } = props;
+  const [properties, setProperties] = useState(props.properties);
+  const { id } = useParams(); // Assuming you need the id from the URL
+  const removeProperty = (indexToRemove: number) => {
+    setProperties((prevProperties) =>
+      prevProperties.filter((_, index) => index !== indexToRemove)
+  );
+};
+
+
   return (
-    <div>
-      <Carousel
-        opts={{
-          align: "start",
-        }}
-        className="w-full mx-auto max-w-3xl px-4 "
-      >
-        <CarouselContent>
-          {properties.map((property, index) => {
-            const formattedProperty = formatPropertyToListingCard(property);
-            return (
-              <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
-                <div className="p-1">
-                  <ListingCard property={formattedProperty} />
-                </div>
-              </CarouselItem>
-            );
-          })}
-        </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
-      </Carousel>
-    </div>
+    <>
+      {properties.length > 0 && (
+        <div>
+          <Carousel
+            opts={{
+              align: "start",
+            }}
+            className="w-full mx-auto max-w-4xl px-4"
+          >
+            <CarouselContent>
+              {properties.map((property, index) => {
+                const formattedProperty = formatPropertyToListingCard(property);
+                return (
+                  <CarouselItem key={index} className="basis-1/2">
+                    <div className="p-1">
+                      <ListingCard
+                        property={formattedProperty}
+                        onRemove={() => removeProperty(index)}
+                        onClick={()=>{}}
+                      />
+                    </div>
+                  </CarouselItem>
+                );
+              })}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
+        </div>
+      )}
+    </>
   );
 };
 

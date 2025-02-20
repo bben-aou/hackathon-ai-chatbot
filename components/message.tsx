@@ -84,7 +84,7 @@ const PurePreviewMessage = ({
             </div>
           )}
 
-          <div className="flex flex-col gap-4 w-full">
+          <div className="flex flex-col gap-2 w-full">
             {message.experimental_attachments && (
               <div className="flex flex-row justify-end gap-2">
                 {message.experimental_attachments.map((attachment) => (
@@ -123,9 +123,9 @@ const PurePreviewMessage = ({
                 )}
 
                 <div
-                  className={cn('flex flex-col gap-4', {
-                    'bg-primary text-primary-foreground px-3 py-2 rounded-xl':
-                      message.role === 'user',
+                  className={cn("flex flex-col  gap-4", {
+                    "bg-primary text-primary-foreground px-3 py-2 rounded-xl":
+                      message.role === "user",
                   })}
                 >
                   <Markdown>{message.content as string}</Markdown>
@@ -154,6 +154,7 @@ const PurePreviewMessage = ({
                   console.log(toolInvocation, 'tools');
                   if (state === 'result') {
                     const { result } = toolInvocation;
+                    console.log('result' , result);
                     return (
                       <div key={toolCallId}>
                         {toolName === 'getWeather' ? (
@@ -278,7 +279,7 @@ export const ThinkingMessage = () => {
 
         <div className="flex flex-col gap-2 w-full">
           <div className="flex flex-col gap-4 text-muted-foreground">
-            Thinking...
+            Analyse en cours...
           </div>
         </div>
       </div>

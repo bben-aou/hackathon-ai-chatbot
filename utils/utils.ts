@@ -18,6 +18,7 @@ export function formatPropertyToListingCard(property: any) {
 
   // Return formatted object
   return {
+    userReference : property.userReference,
     adress: {
       main: property.address.main,
       street: property.address.street,
@@ -27,6 +28,7 @@ export function formatPropertyToListingCard(property: any) {
       zipCode: property.address.zipCode,
       location: property.address.location,
     },
+    rooms : property.rooms,
     area: property.area,
     bathrooms: property.bathrooms,
     category: category, 
@@ -37,3 +39,33 @@ export function formatPropertyToListingCard(property: any) {
     image: mainImageUrl
   };
 }
+
+/**
+ * Formats an amount in Dirhams with space separators
+ * @param {number|string} amount - The amount to format
+ * @returns {string} Formatted amount with 'Dh' suffix
+ */
+export function formatAmount(amount) {
+    // Convert to number if it's a string with 'DH' suffix
+    if (typeof amount === 'string') {
+      amount = amount.replace(/dh|DH/i, '').trim();
+    }
+    
+    // Convert to number and handle invalid inputs
+    const numAmount = parseFloat(amount);
+    if (isNaN(numAmount)) {
+      return 'Invalid amount';
+    }
+    
+    // Format with spaces as thousand separators
+    const formattedAmount = numAmount.toString()
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+    
+    // Return with 'Dh' suffix
+    return `${formattedAmount} Dh`;
+  }
+
+  export function calculateMonthlyPayment(price: number, years = 25) {
+    const monthlyPayement = price / (years * 12);
+     return monthlyPayement.toFixed(2);
+     }

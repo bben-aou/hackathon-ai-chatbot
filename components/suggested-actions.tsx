@@ -16,24 +16,24 @@ interface SuggestedActionsProps {
 function PureSuggestedActions({ chatId, append }: SuggestedActionsProps) {
   const suggestedActions = [
     {
-      title: 'Achat',
-      label: 'Dar lbi3 f casablanca',
-      action: 'bghit dar f casablanca maarif tkon bchi 1 000 000DH',
+      title: 'Je cherche un bien',
+      label: 'KayO vous guide vers votre propriété de rêve',
+      action: 'Je cherche un bien',
     },
     {
-      title: 'Write code to',
-      label: `demonstrate djikstra's algorithm`,
-      action: `Write code to demonstrate djikstra's algorithm`,
+      title: 'Je cherche un Financement',
+      label: `Obtenez votre offre de crédit en toute confiance !`,
+      action: `Je cherche un Financement`,
     },
     {
-      title: 'Help me write an essay',
-      label: `about silicon valley`,
-      action: `Help me write an essay about silicon valley`,
+      title: 'Je trouve un bien proche de ma localisation',
+      label: `KayO vous propose les biens dans votre zone !`,
+      action: `Je trouve un bien proche de ma localisation`,
     },
     {
-      title: 'What is the weather',
-      label: 'in San Francisco?',
-      action: 'What is the weather in San Francisco?',
+      title: 'Je ne sais pas où commencer',
+      label: 'Rien à craindre, KayO est là pour ça.',
+      action: 'Je ne sais pas où commencer',
     },
   ];
 

@@ -1,21 +1,20 @@
-'use client';
+"use client";
 
-import { isToday, isYesterday, subMonths, subWeeks } from 'date-fns';
-import Link from 'next/link';
-import { useParams, usePathname, useRouter } from 'next/navigation';
-import type { User } from 'next-auth';
-import { memo, useEffect, useState } from 'react';
-import { toast } from 'sonner';
-import useSWR from 'swr';
+import { isToday, isYesterday, subMonths, subWeeks } from "date-fns";
+import Link from "next/link";
+import { useParams, usePathname, useRouter } from "next/navigation";
+import type { User } from "next-auth";
+import { memo, useEffect, useState } from "react";
+import { toast } from "sonner";
+import useSWR from "swr";
 
 import {
   CheckCircleFillIcon,
   GlobeIcon,
   LockIcon,
-  MoreHorizontalIcon,
   ShareIcon,
   TrashIcon,
-} from '@/components/icons';
+} from "@/components/icons";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -25,7 +24,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '@/components/ui/alert-dialog';
+} from "@/components/ui/alert-dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -36,7 +35,7 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+} from "@/components/ui/dropdown-menu";
 import {
   SidebarGroup,
   SidebarGroupContent,
@@ -45,11 +44,11 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
-} from '@/components/ui/sidebar';
-import type { Chat } from '@/lib/db/schema';
-import { fetcher } from '@/lib/utils';
-import { useChatVisibility } from '@/hooks/use-chat-visibility';
-import { Ellipsis } from 'lucide-react';
+} from "@/components/ui/sidebar";
+import type { Chat } from "@/lib/db/schema";
+import { fetcher } from "@/lib/utils";
+import { useChatVisibility } from "@/hooks/use-chat-visibility";
+import { Ellipsis } from "lucide-react";
 
 type GroupedChats = {
   today: Chat[];
@@ -76,20 +75,24 @@ const PureChatItem = ({
   });
 
   return (
-    <SidebarMenuItem  className="group">
-      <SidebarMenuButton asChild isActive={isActive}  className="hover:bg-sidebar-hover hover:text-white  rounded-[6px]  ">
+    <SidebarMenuItem className="group">
+      <SidebarMenuButton
+        asChild
+        isActive={isActive}
+        className="hover:bg-sidebar-hover hover:text-white rounded-[6px] "
+      >
         <Link href={`/chat/${chat.id}`} onClick={() => setOpenMobile(false)}>
           <span>{chat.title}</span>
         </Link>
       </SidebarMenuButton>
 
       <DropdownMenu modal={true}>
-        <DropdownMenuTrigger  asChild >
+        <DropdownMenuTrigger asChild>
           <SidebarMenuAction
-            className="data-[state=open]:bg-sidebar-accent   data-[state=open]:text-sidebar-accent-foreground mr-0.5"
+            className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground mr-0.5 hover:bg-transparent group/icon"
             showOnHover={!isActive}
           >
-            <Ellipsis className='group-hover:text-white'/>
+            <Ellipsis className="group-hover:text-white group-hover/icon:text-black" />
             <span className="sr-only">More</span>
           </SidebarMenuAction>
         </DropdownMenuTrigger>
@@ -105,28 +108,28 @@ const PureChatItem = ({
                 <DropdownMenuItem
                   className="cursor-pointer flex-row justify-between"
                   onClick={() => {
-                    setVisibilityType('private');
+                    setVisibilityType("private");
                   }}
                 >
                   <div className="flex flex-row gap-2 items-center">
                     <LockIcon size={12} />
                     <span>Private</span>
                   </div>
-                  {visibilityType === 'private' ? (
+                  {visibilityType === "private" ? (
                     <CheckCircleFillIcon />
                   ) : null}
                 </DropdownMenuItem>
                 <DropdownMenuItem
                   className="cursor-pointer flex-row justify-between"
                   onClick={() => {
-                    setVisibilityType('public');
+                    setVisibilityType("public");
                   }}
                 >
                   <div className="flex flex-row gap-2 items-center">
                     <GlobeIcon />
                     <span>Public</span>
                   </div>
-                  {visibilityType === 'public' ? <CheckCircleFillIcon /> : null}
+                  {visibilityType === "public" ? <CheckCircleFillIcon /> : null}
                 </DropdownMenuItem>
               </DropdownMenuSubContent>
             </DropdownMenuPortal>
@@ -158,7 +161,7 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
     data: history,
     isLoading,
     mutate,
-  } = useSWR<Array<Chat>>(user ? '/api/history' : null, fetcher, {
+  } = useSWR<Array<Chat>>(user ? "/api/history" : null, fetcher, {
     fallbackData: [],
   });
 
@@ -171,26 +174,26 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
   const router = useRouter();
   const handleDelete = async () => {
     const deletePromise = fetch(`/api/chat?id=${deleteId}`, {
-      method: 'DELETE',
+      method: "DELETE",
     });
 
     toast.promise(deletePromise, {
-      loading: 'Deleting chat...',
+      loading: "Deleting chat...",
       success: () => {
         mutate((history) => {
           if (history) {
             return history.filter((h) => h.id !== id);
           }
         });
-        return 'Chat deleted successfully';
+        return "Chat deleted successfully";
       },
-      error: 'Failed to delete chat',
+      error: "Failed to delete chat",
     });
 
     setShowDeleteDialog(false);
 
     if (deleteId === id) {
-      router.push('/');
+      router.push("/");
     }
   };
 
@@ -223,7 +226,7 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
                   className="h-4 rounded-md flex-1 max-w-[--skeleton-width] bg-sidebar-accent-foreground/10"
                   style={
                     {
-                      '--skeleton-width': `${item}%`,
+                      "--skeleton-width": `${item}%`,
                     } as React.CSSProperties
                   }
                 />
@@ -276,7 +279,7 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
         lastWeek: [],
         lastMonth: [],
         older: [],
-      } as GroupedChats,
+      } as GroupedChats
     );
   };
 
