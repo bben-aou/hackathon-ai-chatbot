@@ -1,7 +1,5 @@
 import { motion } from "framer-motion";
-import Link from "next/link";
 
-import { MessageIcon, VercelIcon } from "./icons";
 import Image from "next/image";
 
 export const Overview = () => {
@@ -24,6 +22,9 @@ export const Overview = () => {
             
           />
           <Image src={"/logo.svg"} alt="logo" height={86.27} width={222.18} className="mb-[18.87px]" />
+          <h1 className="text-[25.26px] font-light text-[#666] tracking-[-1px]">
+            Votre One Stop Chat
+          </h1>
           <h1 className="text-[31.26px] font-medium text-black tracking-[-1px]">
             Comment puis-je vous{" "}
             <span

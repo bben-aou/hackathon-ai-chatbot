@@ -18,10 +18,10 @@ export type LoanOption = {
 
 function calculateLoanPayments(loanAmount: number): LoanOption[] {
   const options = [
-    { years: 7, rate: 2.2 },
-    { years: 15, rate: 2.45 },
-    { years: 25, rate: 2.65 },
-    { years: 30, rate: 2.65 },
+    { years: 7, rate: 4.2 },
+    { years: 15, rate: 4.5 },
+    { years: 25, rate: 4.75 },
+    { years: 30, rate: 4.75 },
   ];
 
   return options.map(option => {
