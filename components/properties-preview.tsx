@@ -1,5 +1,5 @@
-import { Button } from "./ui/button";
-import { Card, CardContent, CardFooter, CardHeader } from "./ui/card";
+import { Button } from './ui/button';
+import { Card, CardContent, CardFooter, CardHeader } from './ui/card';
 
 type TAddress = {
   main: string;
@@ -41,6 +41,11 @@ export type TListingCard = {
 export type TListingCardProps = {
   property: TListingCard;
 };
+
+function calculateMonthlyPayment(price: number, years = 25) {
+  return Math.floor(price / (years * 12));
+}
+
 const ListingCard = (props: TListingCardProps) => {
   const { property } = props;
   console.log('test ', property);
@@ -57,10 +62,12 @@ const ListingCard = (props: TListingCardProps) => {
       </CardHeader>
       <CardContent className="p-4 ">
         <h2 className="text-lg font-bold">{property.category}</h2>
-        <p className="text-gray-600">{property.price.global}</p>
-        <div className="h-8 bg-[#f2fbf9]  border-1 border-[#a7e9db] rounded-[6px] flex items-center p-2 text-[14px]">
-          <div className="text-gray-600">{"ops"}</div>
-          <div className="text-gray-600">{"sdjk"}</div>
+        <p className="text-gray-600">{property.price.global} DH</p>
+        <div className="h-8 bg-[#f2fbf9]  border-1 border-[#a7e9db] rounded-[6px] flex items-center gap-2 p-2 text-[14px] font-bold">
+          <div className="text-gray-600">{'Soit'}</div>
+          <div className="text-gray-600">
+            {calculateMonthlyPayment(property.price.global)} DH/mois
+          </div>
         </div>
         <p className="text-gray-600">{property.adress.city}</p>
       </CardContent>
@@ -84,7 +91,7 @@ const ListingCard = (props: TListingCardProps) => {
           <Button variant="ghost">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5"
+              className="size-5"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
