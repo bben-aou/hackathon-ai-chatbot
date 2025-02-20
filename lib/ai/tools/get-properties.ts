@@ -1891,7 +1891,19 @@ here is a list of the possible cities that you infer from the input of the user
 {// condition 1},
 {// condition 2},
 ]}"
-Make sure that your query is case insensitive,
+Make sure that your query is case insensitive.
+If user add a new criteria, you should add it to the query, beside keeping all the previous criteria.
+if this is the initial generated query "'{"$and": [\n' +
+      '  {"status": {"$regex": "^LISTED$", "$options": "i"}},\n' +
+      '  {"transactionType": {"$regex": "^SALE$", "$options": "i"}},\n' +
+      '  {"price.global": {"$gte": 1170000, "$lte": 1430000}}\n' +
+      ']}'"
+      Then the user ask for address.neighborhood to be added to the query, the new query should be: "{"$and": [\n' +
+      '  {"status": {"$regex": "^LISTED$", "$options": "i"}},\n' +
+      '  {"transactionType": {"$regex": "^SALE$", "$options": "i"}},\n' +
+      '  {"price.global": {"$gte": 1170000, "$lte": 1430000}},\n' +
+      '  {"address.neighborhood": {"$regex": "^NEIGHBORHOOD$", "$options": "i"}}\n' +
+      ']}"
 `;
 
 export const propertyTypes = ['VILLA', 'FLAT'] as const;
@@ -1920,7 +1932,7 @@ export const getProperties = ({
       const generatedQuery = await generateObject({
         model: myProvider.languageModel('azure'),
         system: sysPrompt,
-        prompt: `Generate the query necessary to retrieve the data the user wants: ${message}`,
+        prompt: `price: ${res.price}, propertyType: ${res.propertyType}, transactionType: ${res.transactionType}, city: ${res.city}, neighborhood: ${res.neighborhood}, bedrooms: ${res.bedrooms}, bathrooms: ${res.bathrooms}, surface: ${res.surface}. Generate the query necessary to retrieve the data the user wants: ${message}.`,
         schema: z.object({
           query: z.string(),
         }),
@@ -1932,11 +1944,13 @@ export const getProperties = ({
 
       const db = await mongoDbClient.connect();
       const documents = await db
-        .db('yakeey_stage')
-        .collection('properties')
-        .find(mongoQuery)
-        .limit(4)
-        .toArray();
+      .db('yakeey_stage')
+      .collection('properties')
+      .aggregate([
+          { $match: mongoQuery },  
+          { $sample: { size: 6 } } 
+      ])
+      .toArray();
       const properties = JSON.parse(JSON.stringify(documents, null, 2));
       const id = generateUUID();
 
